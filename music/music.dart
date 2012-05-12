@@ -1,7 +1,7 @@
 #import('dart:html');
 
 class Tone {
-  final int    BUFFER_SIZE = 4096;
+  final int    BUFFER_SIZE = 4096 * 3;
   final double PI_2        = Math.PI * 2;
   
   AudioContext context;
@@ -9,7 +9,7 @@ class Tone {
 
   Tone ( ) {
     this.context = new AudioContext( );
-    this.score   = new List( );
+    this.clearCode( );
   }
 
   addCode (String code) {
@@ -30,6 +30,8 @@ class Tone {
     
     this.score.add(NOTE[code]);
   }
+
+  clearCode ( ) => this.score = new List( );
 
   generate ( ) {
     AudioBuffer  buffer = this.context.createBuffer(1, BUFFER_SIZE * this.score.length, this.context.sampleRate);
@@ -52,9 +54,11 @@ void main( ) {
   document.query('#status').innerHTML = 'Dart Running!';
 
   // C D E F G A B
-  var score = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  //var score = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   //List score = ['A'];
+  var score = ['C', 'D', 'E', 'F', 'E', 'D', 'C', 'E', 'F', 'G', 'A', 'G', 'F'];
 
+  
   Tone tone = new Tone( );
   score.forEach((s) => tone.addCode(s));
 

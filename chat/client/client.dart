@@ -59,7 +59,7 @@ class ChatClient {
 
   void onMessage(event) {
     addLogEntry(event.data);
-    addSoundPlay();
+    addSoundPlay(event.data);
   }
 
   void addLogEntry(String message) {
@@ -68,14 +68,8 @@ class ChatClient {
     logBox.elements.add(entry);
   }
 
-  void addSoundPlay() {
-    // C D E F G A B
-    var score = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-    //List score = ['A'];
-
-    score.forEach((s) => this.tone.addCode(s));
-
-    this.tone.generate( );
+  void addSoundPlay(tone) {
+    this.tone.generate(tone);
   }
 
 }

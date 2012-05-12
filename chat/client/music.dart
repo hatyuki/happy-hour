@@ -3,20 +3,15 @@
 #import('dart:html');
 
 class Tone {
-  final int    BUFFER_SIZE = 4096;
+  final int    BUFFER_SIZE = 10000;
   final double PI_2        = Math.PI * 2;
   
   AudioContext context;
-  List score;
+  HashMap TONES;
 
   Tone ( ) {
     this.context = new AudioContext( );
-    this.clearCode( );
-    this.score   = new List( );
-  }
-
-  addCode (String code) {
-    var NOTE = {
+    TONES = {
                 'A':  440.000000,
                 'As': 466.163762,
                 'B':  493.883301,
@@ -30,27 +25,25 @@ class Tone {
                 'G':  783.990872,
                 'Gs': 830.609395,
     };
-    
-    this.score.add(NOTE[code]);
   }
 
-  clearCode ( ) => this.score = new List( );
+  generate (tone) {
+    if (!TONES.containsKey(tone)) {
+      return;
+    }
 
-  generate ( ) {
-    AudioBuffer  buffer = this.context.createBuffer(1, BUFFER_SIZE * this.score.length, this.context.sampleRate);
+    var freq = TONES[tone];
+    AudioBuffer  buffer = this.context.createBuffer(1, BUFFER_SIZE, this.context.sampleRate);
     Float32Array buf    = buffer.getChannelData(0);
 
-    for (int i = 0; i < this.score.length ; i++) {
-      for (int j = 0 ; j < BUFFER_SIZE ; j++) {
-        buf[i*BUFFER_SIZE+j] = 0.5*Math.sin(this.score[i] * PI_2 * j / this.context.sampleRate);
-      }
+    for (int i = 0; i < BUFFER_SIZE ; i++) {
+      buf[i] = 0.5*Math.sin(freq * PI_2 * i / this.context.sampleRate);
     }
 
     AudioBufferSourceNode source = this.context.createBufferSource( );
     source.buffer = buffer;
     source.connect(this.context.destination, 0);
     source.noteOn(0);
-
   }
 }
 

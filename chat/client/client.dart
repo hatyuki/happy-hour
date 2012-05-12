@@ -22,7 +22,7 @@ class ChatClient {
   }
 
   void run() {
-    webSocket = new WebSocket("ws://127.0.0.1:8080");
+    webSocket = new WebSocket("ws://kiri.nya3.jp:41894/");
     webSocket.on.open.add(onOpen);
     webSocket.on.close.add(onClosed);
     webSocket.on.message.add(onMessage);

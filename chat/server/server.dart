@@ -34,6 +34,7 @@ class ChatHandler {
     for (WebSocketConnection connection in connections) {
       connection.send(message);
     }
+    print(message);
   }
 
   // Called when a new client joined.
@@ -71,6 +72,6 @@ void main() {
   HttpServer httpServer = new HttpServer();
   ChatHandler chatHandler = new ChatHandler();
   chatHandler.addToHttpServer(httpServer);
-  httpServer.listen("127.0.0.1", 8080);
+  httpServer.listen("0.0.0.0", 41894);
   print("running...");
 }

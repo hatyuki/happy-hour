@@ -1,10 +1,12 @@
 #import("dart:html");
+#import("music.dart");
  
 class ChatClient {
   WebSocket webSocket;
   UListElement logBox;
   InputElement messageBox;
   ButtonElement sendButton;
+  Tone tone;
  
   ChatClient() {
     logBox = document.query("#log");
@@ -23,6 +25,7 @@ class ChatClient {
 
   void run() {
     webSocket = new WebSocket("ws://kiri.nya3.jp:41894/");
+    this.tone = new Tone( );
     webSocket.on.open.add(onOpen);
     webSocket.on.close.add(onClosed);
     webSocket.on.message.add(onMessage);
@@ -47,22 +50,13 @@ class ChatClient {
   }
 
   void addSoundPlay() {
-    AudioContext audioContext = new AudioContext();
-    final int SAMPLE_RATE = 44100;
-    final double PI_2 = Math.PI * 2;
-    final int BUFFER_SIZE = 4096;
-    AudioBuffer audioBuffer = audioContext.createBuffer(1, BUFFER_SIZE, SAMPLE_RATE);
-    
-    Float32Array buf = audioBuffer.getChannelData(0);
-   
-    for (int i = 0; i < 4096; ++i) {
-      buf[i] = Math.sin(440 * PI_2 * i / SAMPLE_RATE);
-    }
+    // C D E F G A B
+    var score = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    //List score = ['A'];
 
-     AudioBufferSourceNode source = audioContext.createBufferSource(); 
-     source.buffer = audioBuffer;
-     source.connect(audioContext.destination, 0);
-     source.noteOn(0);
+    score.forEach((s) => this.tone.addCode(s));
+
+    this.tone.generate( );
   }
 
 }

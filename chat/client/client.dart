@@ -7,12 +7,31 @@ class ChatClient {
   InputElement messageBox;
   ButtonElement sendButton;
   Tone tone;
+
+  List<String> TONES;
+  List<String> KEYS;
  
   ChatClient() {
+    TONES = ['A', 'As', 'B', 'C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs'];
+    KEYS = ['A', 'W', 'S', 'D', 'R', 'F', 'T', 'G', 'H', 'U', 'J', 'I'];
     logBox = document.query("#log");
     messageBox = document.query("#message");
     sendButton = document.query("#send");
     sendButton.on.click.add(onSendButtonClick);
+    document.body.on.keyDown.add(onKey);
+    for (String tone in TONES) {
+      ((tone) {
+        document.query("#tone${tone}").on.click.add((event){ webSocket.send(tone); });
+      })(tone);
+    }
+  }
+
+  void onKey(Event e) {
+    for (int i = 0; i < KEYS.length; ++i) {
+      if (e.keyCode == KEYS[i].charCodeAt(0)) {
+        webSocket.send(TONES[i]);
+      }
+    }
   }
 
   void onSendButtonClick(Event e) {

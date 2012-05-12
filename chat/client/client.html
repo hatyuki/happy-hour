@@ -2,14 +2,35 @@
 
 <html>
   <head>
-    <title>Happy Chat</title>
+    <title>Sound Chat</title>
+    <style>
+      .noteAs { background-color: black }
+      .noteCs { background-color: black }
+      .noteDs { background-color: black }
+      .noteFs { background-color: black }
+      .noteGs { background-color: black }
+       td { border: 1px solid black }
+    </style>
   </head>
   <body>
-    <h1>Happy Chat</h1>
+    <h1>Sound Chat</h1>
     <h2 id="status">dart is not running</h2>
     <div>
       <input type="text" name="message" id="message" size="100">
       <button id="send">send</button>
+      <br>
+      <button id="toneA">A</button>
+      <button id="toneAs">A#</button>
+      <button id="toneB">B</button>
+      <button id="toneC">C</button>
+      <button id="toneCs">C#</button>
+      <button id="toneD">D</button>
+      <button id="toneDs">D#</button>
+      <button id="toneE">E</button>
+      <button id="toneF">F</button>
+      <button id="toneFs">F#</button>
+      <button id="toneG">G</button>
+      <button id="toneGs">G#</button>
       <ul id="log"></ul>
     </div>
     <script type="application/dart" src="client.dart"></script>
